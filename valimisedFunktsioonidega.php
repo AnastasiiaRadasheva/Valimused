@@ -31,6 +31,12 @@ if(isset($_REQUEST['peida'])) {
     peida($_REQUEST['peida']);
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
+
+}
+if(isset($_REQUEST['punkt0'])) {
+    punkt0($_REQUEST['peida']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -51,6 +57,8 @@ if(isset($_REQUEST['peida'])) {
         <th>+1 punkt</th>
         <th>-1 punkt</th>
         <th>Kustuta president</th>
+        <th>Punktid nulliks</th>
+
         <th>Haldus </th>
         <th>Staatus </th>
     </tr>

@@ -34,7 +34,8 @@ function naitatabel(){
         echo "<td>{$pilt}</td>";
         echo "<td><a href='?lisa1punktid={$id}'>+1 punkt</a></td>";
         echo "<td><a href='?kustuta1punktid={$id}'>-1 punkt</a></td>";
-        echo "<td><a href='?kusututaPresident={$id}'>Kustuta president</a></td>";
+        echo "<td><a href='?kusututaPresident={$id}'>Kustuta</a></td>";
+        echo "<td><a href='?punkt0={$id}'>0</a></td>";
 
         $tekst="näita";
         $seisund="naita";
@@ -87,5 +88,11 @@ function peida($id)
     $paring->execute();
 }
 
-
+function punkt0($id)
+{
+    global $connect;
+    $paring = $connect->prepare("update valimused set punktid=0 where id=?");
+    $paring->bind_param('i', $_REQUEST['punkt0']);
+    $paring->execute();
+}
 
