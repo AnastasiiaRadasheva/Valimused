@@ -71,7 +71,6 @@ function lisaPresident($presidentNimi, $pilt)
     $paring->bind_param("ss", $presidentNimi, $pilt);
     $paring->execute();
 }
-
 function kusututaPresident($id)
 {
     global $connect;
@@ -93,7 +92,7 @@ function peida($id)
 {
     global $connect;
     $paring = $connect->prepare("update valimused set avalik=0 where id=?");
-    $paring->bind_param('i', $_REQUEST['peida']);
+    $paring->bind_param('i', $id);
     $paring->execute();
 }
 
@@ -101,7 +100,7 @@ function punkt0($id)
 {
     global $connect;
     $paring = $connect->prepare("update valimused set punktid=0 where id=?");
-    $paring->bind_param('i', $_REQUEST['punkt0']);
+    $paring->bind_param('i', $id);
     $paring->execute();
 }
 

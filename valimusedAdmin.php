@@ -120,9 +120,6 @@ Select id, president, pilt, punktid, lisamisaeg, avalik  from valimused ");
     <label for="pilt">Pilt:</label>
     <textarea name="pilt" id="pilt" ></textarea>
     <br>
-
-
-
     <label for="avalik">Staatus:</label><br>
     <select name="avalik" id="avalik" required>
         <option value="1">Avalik</option>

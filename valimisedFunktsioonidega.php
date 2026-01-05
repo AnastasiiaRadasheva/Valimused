@@ -12,7 +12,7 @@ if(isset($_REQUEST['kustuta1punktid'])) {
     exit();
 }
 if (isset($_REQUEST['presidentNimi'])) {
-    lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt']);
+    lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt'], $_REQUEST['avalik'] );
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
@@ -80,15 +80,6 @@ if (isset($_REQUEST['uus_kommentaar']) && isset($_REQUEST['uue_komment_id'])) {
     <br>
     <label for="pilt">Pilt:</label>
     <textarea name="pilt" id="pilt" ></textarea>
-    <br>
-    <label for="punktid">punktid:</label>
-    <input type="text" name="punktid" id="punktid">
-    <br>
-
-    <label for="avalik">Staatus:</label><br>
-    <select name="avalik" id="avalik" required>
-        <option value="1">Avalik</option>
-        <option value="0">Peidetud</option></select>
     <br>
     <input type="submit" value="Lisa">
 
