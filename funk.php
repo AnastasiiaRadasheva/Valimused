@@ -1,24 +1,31 @@
 <?php
-function lisapunkt($id)
+require ('conf.php');
+function lisa1punktid($id)
 {
     global $connect;
     $paring = $connect->prepare("update valimused set punktid=punktid+1 where id=?");
-    $paring->bind_param('i', $_REQUEST['lisa1punktid']);
+    $paring->bind_param('i', $id);
     $paring->execute();
-    header("Location:" . $_SERVER['PHP_SELF']);//aadresiriba puhasta päring ja jääb failinimi
+    $paring->close();
 }
-function naitatabel($id){
 
+function naitatabel(){
     global $connect;
-    $paring=$connect->prepare("
-Select id, president, pilt, punktid, lisamisaeg  from valimused where avalik=1");
-    $paring->bind_result($id, $president, $pilt, $punktid, $lisamisaeg);
+
+    $paring = $connect->prepare("
+        SELECT id, president, pilt, punktid, lisamisaeg
+        FROM valimused
+        WHERE avalik = 1
+    ");
     $paring->execute();
-    while($paring->fetch()){
+    $paring->bind_result($id, $president, $pilt, $punktid, $lisamisaeg);
+    while ($paring->fetch()) {
         echo "<tr>";
         echo "<td>{$president}</td>";
         echo "<td>{$punktid}</td>";
-        echo "<td><a href='?lisa1punktid={$id}'> +1 punkt</a></td>";
-        echo "<td><a href='?kustuta1punktid=$id'> -1 punkt</a></td>";
+        echo "<td><a href='?lisa1punktid={$id}'>+1 punkt</a></td>";
         echo "</tr>";
+    }
+
+    $paring->close();
 }
