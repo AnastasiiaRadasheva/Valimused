@@ -9,7 +9,7 @@ if(isset($_REQUEST['lisa1punktid'])) {
 if(isset($_REQUEST['kustuta1punktid'])) {
     kustuta1punktid($_REQUEST['kustuta1punktid']);
     header("Location:" . $_SERVER['PHP_SELF']);//aadresiriba puhasta päring ja jääb failinimi
-    exit();
+    exit(); 
 }
 if (isset($_REQUEST['presidentNimi'])) {
     lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt']);
