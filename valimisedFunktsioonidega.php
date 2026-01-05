@@ -6,14 +6,21 @@ if(isset($_REQUEST['lisa1punktid'])) {
     header("Location:" . $_SERVER['PHP_SELF']);//aadresiriba puhasta päring ja jääb failinimi
     exit();
 }
-
-if(!empty($_REQUEST['lisapresident'])) {
-    lisapresident($_REQUEST['lisapresident'], $_REQUEST['pilt'], $_REQUEST['punktid']);
-    header("Location:" . $_SERVER['PHP_SELF']);
+if(isset($_REQUEST['kustuta1punktid'])) {
+    kustuta1punktid($_REQUEST['kustuta1punktid']);
+    header("Location:" . $_SERVER['PHP_SELF']);//aadresiriba puhasta päring ja jääb failinimi
     exit();
 }
-if(isset($_REQUEST['delete'])) {
-    header("Location:" . $_SERVER['PHP_SELF']);
+if (isset($_REQUEST['presidentNimi'])) {
+    lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+if (isset($_REQUEST['kusututaPresident'])) {
+    kusututaPresident($_REQUEST['kusututaPresident']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -25,11 +32,17 @@ if(isset($_REQUEST['delete'])) {
 <h1>
     tabel valimised kirjutatud funktsoonide abil
 </h1>
+
+<h1>Tabel valimised (funktsioonidega)</h1>
+
+
 <table>
     <tr>
         <th>Nimi</th>
         <th>Punktid</th>
         <th>+1 punkt</th>
+        <th>-1 punkt</th>
+        <th>Kustuta president</th>
     </tr>
     <?php
     //funktsioon is näitab tabeli asub funktsioonid.php failis

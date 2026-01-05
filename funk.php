@@ -8,6 +8,14 @@ function lisa1punktid($id)
     $paring->execute();
     $paring->close();
 }
+function kustuta1punktid($id)
+{
+    global $connect;
+    $paring = $connect->prepare("update valimused set punktid=punktid-1 where id=?");
+    $paring->bind_param('i', $id);
+    $paring->execute();
+    $paring->close();
+}
 
 function naitatabel(){
     global $connect;
@@ -23,27 +31,32 @@ function naitatabel(){
         echo "<tr>";
         echo "<td>{$president}</td>";
         echo "<td>{$punktid}</td>";
+        echo "<td>{$pilt}</td>";
         echo "<td><a href='?lisa1punktid={$id}'>+1 punkt</a></td>";
+        echo "<td><a href='?kustuta1punktid={$id}'>-1 punkt</a></td>";
+        echo "<td><a href='?kusututaPresident={$id}'>Kustuta president</a></td>";
         echo "</tr>";
     }
 
     $paring->close();
 }
 //uue presidenti lisamine INSERT
-function lisapresident($president, $pilt, $punktid){
+function lisaPresident($presidentNimi, $pilt)
+{
     global $connect;
-    $paring = $connect->prepare("
-INSERT INTO valimused (president, pilt, punktid, lisamisaeg) VALUES (?, ?,?,  NOW())");
-    $paring->bind_param('ssi', $president, $pilt, $punktid );
-    $paring->close();
-
+    $paring = $connect->prepare(
+        "INSERT INTO valimused (president, pilt, punktid, lisamisaeg) VALUES (?, ?, 0, NOW())"
+    );
+    $paring->bind_param("ss", $presidentNimi, $pilt);
+    $paring->execute();
 }
 
-function deletepresident($president, $pilt, $punktid){
+function kusututaPresident($id)
+{
     global $connect;
-    $paring = $connect->prepare("DELETE FROM valimused WHERE id=?");
-    $paring->bind_param('i', $_REQUEST['delete']);
+    $paring = $connect->prepare(
+        "Delete from valimused where id=?"
+    );
+    $paring->bind_param("i", $id);
     $paring->execute();
-    header("Location:" . $_SERVER['PHP_SELF']);
-    $connect->close();
 }
