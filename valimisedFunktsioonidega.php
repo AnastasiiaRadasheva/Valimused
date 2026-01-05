@@ -38,6 +38,11 @@ if(isset($_REQUEST['punkt0'])) {
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
+if (isset($_REQUEST['uus_kommentaar']) && isset($_REQUEST['uue_komment_id'])) {
+    uuskommentaar($_REQUEST['uus_kommentaar'], $_REQUEST['uue_komment_id']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,9 +61,10 @@ if(isset($_REQUEST['punkt0'])) {
         <th>Pilt</th>
         <th>+1 punkt</th>
         <th>-1 punkt</th>
+        <th>Kommentaarid</th>
+        <th>Lisa kommentaar</th>
         <th>Kustuta president</th>
         <th>Punktid nulliks</th>
-
         <th>Haldus </th>
         <th>Staatus </th>
     </tr>

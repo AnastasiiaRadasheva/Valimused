@@ -21,12 +21,12 @@ function naitatabel(){
     global $connect;
 
     $paring = $connect->prepare("
-        SELECT id, president, pilt, punktid, lisamisaeg, avalik
+        SELECT id, president, pilt, punktid, lisamisaeg, avalik, kommentaarid
         FROM valimused
         WHERE avalik = 1 or avalik = 0
     ");
     $paring->execute();
-    $paring->bind_result($id, $president, $pilt, $punktid, $lisamisaeg, $avalik);
+    $paring->bind_result($id, $president, $pilt, $punktid, $lisamisaeg, $avalik, $kommentaarid);
     while ($paring->fetch()) {
         echo "<tr>";
         echo "<td>{$president}</td>";
@@ -34,6 +34,15 @@ function naitatabel(){
         echo "<td>{$pilt}</td>";
         echo "<td><a href='?lisa1punktid={$id}'>+1 punkt</a></td>";
         echo "<td><a href='?kustuta1punktid={$id}'>-1 punkt</a></td>";
+        echo "<td>{$kommentaarid}</td>";
+
+        echo "<td>
+            <form action='' method='post'>
+                <input type='hidden' name='uue_komment_id' value='$id'>
+                <input type='text' name='uus_kommentaar'>
+                <input type='submit' value='OK'>
+            </form>        </td>";
+
         echo "<td><a href='?kusututaPresident={$id}'>Kustuta</a></td>";
         echo "<td><a href='?punkt0={$id}'>0</a></td>";
 
@@ -96,3 +105,11 @@ function punkt0($id)
     $paring->execute();
 }
 
+function uuskommentaar($komment2, $id)
+{
+    global $connect;
+    $paring = $connect->prepare("update valimused set kommentaarid=CONCAT(kommentaarid, ?) where id=?");
+    $paring->bind_param("si", $komment2, $id);
+    $paring->execute();
+    $paring->close();
+}
