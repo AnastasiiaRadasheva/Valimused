@@ -15,7 +15,7 @@ function naitatabel(){
     $paring = $connect->prepare("
         SELECT id, president, pilt, punktid, lisamisaeg
         FROM valimused
-        WHERE avalik = 1
+        WHERE avalik = 1 or avalik = 0
     ");
     $paring->execute();
     $paring->bind_result($id, $president, $pilt, $punktid, $lisamisaeg);
@@ -28,4 +28,22 @@ function naitatabel(){
     }
 
     $paring->close();
+}
+//uue presidenti lisamine INSERT
+function lisapresident($president, $pilt, $punktid){
+    global $connect;
+    $paring = $connect->prepare("
+INSERT INTO valimused (president, pilt, punktid, lisamisaeg) VALUES (?, ?,?,  NOW())");
+    $paring->bind_param('ssi', $president, $pilt, $punktid );
+    $paring->close();
+
+}
+
+function deletepresident($president, $pilt, $punktid){
+    global $connect;
+    $paring = $connect->prepare("DELETE FROM valimused WHERE id=?");
+    $paring->bind_param('i', $_REQUEST['delete']);
+    $paring->execute();
+    header("Location:" . $_SERVER['PHP_SELF']);
+    $connect->close();
 }
