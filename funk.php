@@ -32,6 +32,7 @@ function naitatabel(){
         echo "<td>{$president}</td>";
         echo "<td>{$punktid}</td>";
         echo "<td>{$pilt}</td>";
+                echo "<td>{$lisamisaeg}</td>";
         echo "<td><a href='?lisa1punktid={$id}'>+1 punkt</a></td>";
         echo "<td><a href='?kustuta1punktid={$id}'>-1 punkt</a></td>";
         echo "<td>{$kommentaarid}</td>";
@@ -43,7 +44,8 @@ function naitatabel(){
                 <input type='submit' value='OK'>
             </form>        </td>";
 
-        echo "<td><a href='?kusututaPresident={$id}'>Kustuta</a></td>";
+        echo "<td><a href='?kustutaKom={$id}'>Kustuta kommentarid</a></td>";
+
         echo "<td><a href='?punkt0={$id}'>0</a></td>";
 
         $tekst="näita";
@@ -56,6 +58,7 @@ function naitatabel(){
         }
         echo "<td><a href='?$seisund=$id'>$tekst</a></td>";
         echo "<td>$tekstLehel</td>";
+        echo "<td><a href='?kusututaPresident={$id}'>Kustuta</a></td>";
         echo "</tr>";
     }
 
@@ -66,7 +69,7 @@ function lisaPresident($presidentNimi, $pilt)
 {
     global $connect;
     $paring = $connect->prepare(
-        "INSERT INTO valimused (president, pilt, punktid, lisamisaeg) VALUES (?, ?, 0, NOW())"
+        "INSERT INTO valimused (president, pilt, punktid, lisamisaeg, kommentaarid) VALUES (?, ?, 0, NOW(), ' ')"
     );
     $paring->bind_param("ss", $presidentNimi, $pilt);
     $paring->execute();
@@ -109,6 +112,15 @@ function uuskommentaar($komment2, $id)
     global $connect;
     $paring = $connect->prepare("update valimused set kommentaarid=CONCAT(kommentaarid, ?) where id=?");
     $paring->bind_param("si", $komment2, $id);
+    $paring->execute();
+    $paring->close();
+}
+
+function kustutaKom($id){
+    global $connect;
+    $paring=$connect->prepare("
+Update valimused SET kommentaarid=' ' WHERE id=?");
+    $paring->bind_param('i', $id);;
     $paring->execute();
     $paring->close();
 }
