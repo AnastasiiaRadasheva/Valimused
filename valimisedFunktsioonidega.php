@@ -12,7 +12,7 @@ if(isset($_REQUEST['kustuta1punktid'])) {
     exit();
 }
 if (isset($_REQUEST['presidentNimi'])) {
-    lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt'], $_REQUEST['avalik'] );
+    lisaPresident($_REQUEST['presidentNimi'], $_REQUEST['pilt'] );
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
@@ -43,10 +43,16 @@ if (isset($_REQUEST['uus_kommentaar']) && isset($_REQUEST['uue_komment_id'])) {
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
+if(isset($_REQUEST['kustutaKom'])){
+    kustutaKom($_REQUEST['kustutaKom']);
+    header("Location:". $_SERVER['PHP_SELF']);
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
     <title>Tabel Valimised Funktsioonidega</title>
 </head>
 <body>
@@ -59,14 +65,17 @@ if (isset($_REQUEST['uus_kommentaar']) && isset($_REQUEST['uue_komment_id'])) {
         <th>Nimi</th>
         <th>Punktid</th>
         <th>Pilt</th>
+        <th>Lisamisaeg</th>
         <th>+1 punkt</th>
         <th>-1 punkt</th>
         <th>Kommentaarid</th>
         <th>Lisa kommentaar</th>
-        <th>Kustuta president</th>
+     <th>Kustuta kommentaar</th>
+
         <th>Punktid nulliks</th>
         <th>Haldus </th>
         <th>Staatus </th>
+     <th>Kustuta president</th>
     </tr>
     <?php
     //funktsioon is näitab tabeli asub funktsioonid.php failis
@@ -80,8 +89,8 @@ if (isset($_REQUEST['uus_kommentaar']) && isset($_REQUEST['uue_komment_id'])) {
     <br>
     <label for="pilt">Pilt:</label>
     <textarea name="pilt" id="pilt" ></textarea>
-    <br>
-    <input type="submit" value="Lisa">
+
+    <br>    <input type="submit" value="Lisa">
 
 </form>
 
